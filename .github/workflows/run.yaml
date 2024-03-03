@@ -1,0 +1,39 @@
+name: Run BeyondSilence
+
+on:
+  workflow_dispatch: # Manually trigger
+  schedule:
+    - cron: "0 12 * * *" # Every day at 12:00 (UTC) or 4:00 (UTC+8)
+
+permissions: write-all
+
+jobs:
+  workflow:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - name: Installing requirements
+        continue-on-error: true # Don't fail the workflow, probably already satisfied
+        run: |
+          pip install -r requirements.txt
+      - name: Run BeyondSilence
+        env:
+          BEYONDSILENCE_CONFIG: ${{ secrets.BEYONDSILENCE_CONFIG }}
+          BEYONDSILENCE_KEYS: ${{ secrets.BEYONDSILENCE_KEYS }}
+        run: |
+          python -m BeyondSilence
+      - name: Upload output
+        uses: actions/upload-artifact@v3
+        continue-on-error: true # Don't fail the workflow
+        with:
+          name: output.txt
+          path: output.txt
+      - name: Commit and push output
+        continue-on-error: true # Don't fail the workflow
+        run: |
+          git add .
+          git config --global user.email "bot@github.com"
+          git config --global user.name "Github Bot"
+          git commit -m "Update by Github Action"
+          git push

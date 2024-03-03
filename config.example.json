@@ -1,0 +1,19 @@
+{
+  "github_user_name": "MurataHimeko",
+  "days_before": 15,
+  "main_description": "这就是，最后一课了.....",
+  "dump_config_when_triggered": true,
+  "trigger_when_api_404": false,
+  "messages": [
+    {
+      "environ": "MESSAGE1",
+      "description": "姬子温柔地注视着你，不再言语。",
+      "content": ""
+    },
+    {
+      "environ": "MESSAGE2",
+      "description": "琪亚娜，我已经没有什么能教你的了。",
+      "content": ""
+    }
+  ]
+}
